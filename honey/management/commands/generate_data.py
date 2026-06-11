@@ -1,11 +1,14 @@
 from django.core.management.base import BaseCommand
-from honey.models import Honey
+from faker import Faker
+from honey.models import Group, Honey, Stock, Order, Feedback
 import random
 
 class Command(BaseCommand):
     help = 'Генерирует тестовые данные'
 
     def handle(self, *args, **options):
+        fake = Faker(['ru_RU'])
+        
         types = ['липовый', 'гречишный', 'цветочный', 'лесной', 'акациевый', 
             'донниковый', 'клеверный', 'подсолнечниковый', 'мятный', 
             'каштановый', 'горный', 'луговой', 'майский', 'июньский', 'августовский', 'весенний', 'осенний',
@@ -16,6 +19,41 @@ class Command(BaseCommand):
             'дальневосточный', 'крымский', 'кубанский', 'донской', 'волжский', 'тёмный', 'светлый', 'янтарный', 'прозрачный', 'кристаллизованный',
             'жидкий', 'густой', 'ароматный']
         
-        for _ in range(1000):
-            name = random.choice(types) + ' мёд'
-            Honey.objects.create(name=name)
+        # ГРУППЫ
+        groups = []
+        for _ in range(30):
+            group = Group.objects.create(name=random.choice(types) + ' мёд')
+            groups.append(group)
+        
+        # ТОВАРЫ
+        for _ in range(200):
+            Honey.objects.create(
+                name=random.choice(types) + ' мёд',
+                group=random.choice(groups)
+            )
+        
+        # ОСТАТКИ
+        for _ in range(200):
+            Stock.objects.create(
+                name=random.choice(types) + ' мёд',
+                group=random.choice(groups),
+                count=random.randint(0, 500)
+            )
+        
+        # ЗАКАЗЫ
+        for _ in range(300):
+            Order.objects.create(
+                name='Заказ ' + fake.word(),
+                group=random.choice(groups),
+                count=random.randint(1, 100)
+            )
+        
+        # ОТЗЫВЫ
+        for _ in range(250):
+            Feedback.objects.create(
+                name=fake.first_name(),
+                group=random.choice(groups),
+                comment=fake.sentence(nb_words=5)
+            )
+        
+        self.stdout.write('Создано 1000+ записей')

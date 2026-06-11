@@ -32,7 +32,7 @@ class StockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stock
-        fields = ['id', 'name', 'group', 'count', 'picture', 'user']
+        fields = ['id', 'name', 'group', 'count', 'user']
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -43,7 +43,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ['id', 'name', 'group', 'count', 'picture', 'user']
+        fields = ['id', 'name', 'group', 'count', 'user']
 
 
 class FeedbackSerializer(serializers.ModelSerializer):

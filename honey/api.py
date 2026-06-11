@@ -11,7 +11,6 @@ from .models import Group, Honey, Stock, Order, Feedback
 from .serializers import GroupSerializer, HoneySerializer, StockSerializer, OrderSerializer, FeedbackSerializer
 
 
-# ========== GROUP ==========
 @method_decorator(csrf_exempt, name='dispatch')
 class GroupViewset(ModelViewSet):
     queryset = Group.objects.all()
@@ -48,7 +47,6 @@ class GroupViewset(ModelViewSet):
         return Response(serializer.data)
 
 
-# ========== HONEY ==========
 @method_decorator(csrf_exempt, name='dispatch')
 class HoneyViewset(ModelViewSet):
     queryset = Honey.objects.all()
@@ -109,7 +107,6 @@ class HoneyViewset(ModelViewSet):
         return response
 
 
-# ========== STOCK ==========
 @method_decorator(csrf_exempt, name='dispatch')
 class StockViewset(ModelViewSet):
     queryset = Stock.objects.all()
@@ -146,7 +143,6 @@ class StockViewset(ModelViewSet):
         return Response(serializer.data)
 
 
-# ========== ORDER ==========
 @method_decorator(csrf_exempt, name='dispatch')
 class OrderViewset(ModelViewSet):
     queryset = Order.objects.all()
@@ -183,7 +179,6 @@ class OrderViewset(ModelViewSet):
         return Response(serializer.data)
 
 
-# ========== FEEDBACK ==========
 @method_decorator(csrf_exempt, name='dispatch')
 class FeedbackViewset(ModelViewSet):
     queryset = Feedback.objects.all()

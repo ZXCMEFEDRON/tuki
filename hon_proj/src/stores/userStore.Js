@@ -7,7 +7,6 @@ export const useUserStore = defineStore('user', () => {
   const isAuthenticated = ref(false)
   const loading = ref(false)
 
-  // Проверка текущего пользователя
   async function fetchUser() {
     loading.value = true
     try {
@@ -27,7 +26,6 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  // Вход
   async function login(username, password) {
     try {
       const formData = new FormData()
@@ -50,7 +48,6 @@ export const useUserStore = defineStore('user', () => {
     }
   }
 
-  // Выход
   async function logout() {
     try {
       await axios.post('/api/auth/logout/', {}, { withCredentials: true })

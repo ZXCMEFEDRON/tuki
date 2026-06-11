@@ -17,14 +17,12 @@ const enlargedImage = ref(null)
 const editPictureRef = ref(null)
 const editPictureFile = ref(null)
 
-// Фильтры
 const filterId = ref('')
 const filterName = ref('')
 const filterGroup = ref('')
 const filterCountMin = ref('')
 const filterCountMax = ref('')
 
-// Статистика
 const stats = ref({ count: 0, avg: 0, max: 0, min: 0 })
 const showStats = ref(false)
 
@@ -172,13 +170,12 @@ onBeforeMount(async () => {
     
     <div v-if="showStats" class="alert alert-info mb-3">
       <h5>Статистика по заказам:</h5>
-      <p>📋 Всего записей: {{ stats.count }}</p>
-      <p>📊 Средний ID: {{ stats.avg.toFixed(2) }}</p>
-      <p>📈 Максимальный ID: {{ stats.max }}</p>
-      <p>📉 Минимальный ID: {{ stats.min }}</p>
+      <p>Всего записей: {{ stats.count }}</p>
+      <p>Средний ID: {{ stats.avg.toFixed(2) }}</p>
+      <p>Максимальный ID: {{ stats.max }}</p>
+      <p>Минимальный ID: {{ stats.min }}</p>
     </div>
     
-    <!-- ФИЛЬТРЫ -->
     <div class="card mb-3">
       <div class="card-header bg-light">
         <strong>🔍 Фильтры</strong>

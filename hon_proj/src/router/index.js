@@ -16,16 +16,13 @@ const router = createRouter({
   routes
 })
 
-// Проверка авторизации перед каждым переходом
 router.beforeEach(async (to, from, next) => {
   const userStore = useUserStore()
   
-  // Если не загрузили пользователя ещё
   if (userStore.user === null && !userStore.loading) {
     await userStore.fetchUser()
   }
-  
-  // Если нужна авторизация
+
   if (to.meta.requiresAuth && !userStore.isAuthenticated) {
     next('/login')
   } else if (to.path === '/login' && userStore.isAuthenticated) {
