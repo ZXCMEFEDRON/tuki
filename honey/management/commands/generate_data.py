@@ -19,20 +19,17 @@ class Command(BaseCommand):
             'дальневосточный', 'крымский', 'кубанский', 'донской', 'волжский', 'тёмный', 'светлый', 'янтарный', 'прозрачный', 'кристаллизованный',
             'жидкий', 'густой', 'ароматный']
         
-        # ГРУППЫ
         groups = []
         for _ in range(30):
             group = Group.objects.create(name=random.choice(types) + ' мёд')
             groups.append(group)
         
-        # ТОВАРЫ
         for _ in range(200):
             Honey.objects.create(
                 name=random.choice(types) + ' мёд',
                 group=random.choice(groups)
             )
         
-        # ОСТАТКИ
         for _ in range(200):
             Stock.objects.create(
                 name=random.choice(types) + ' мёд',
@@ -40,7 +37,6 @@ class Command(BaseCommand):
                 count=random.randint(0, 500)
             )
         
-        # ЗАКАЗЫ
         for _ in range(300):
             Order.objects.create(
                 name='Заказ ' + fake.word(),
@@ -48,12 +44,9 @@ class Command(BaseCommand):
                 count=random.randint(1, 100)
             )
         
-        # ОТЗЫВЫ
         for _ in range(250):
             Feedback.objects.create(
                 name=fake.first_name(),
                 group=random.choice(groups),
                 comment=fake.sentence(nb_words=5)
             )
-        
-        self.stdout.write('Создано 1000+ записей')
