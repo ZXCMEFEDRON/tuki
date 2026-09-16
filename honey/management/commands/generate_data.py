@@ -9,44 +9,53 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         fake = Faker(['ru_RU'])
         
-        types = ['липовый', 'гречишный', 'цветочный', 'лесной', 'акациевый', 
-            'донниковый', 'клеверный', 'подсолнечниковый', 'мятный', 
-            'каштановый', 'горный', 'луговой', 'майский', 'июньский', 'августовский', 'весенний', 'осенний',
-            'степной', 'таёжный', 'альпийский', 'полевой', 'садовый',
-            'деревенский', 'падевый', 'эспарцетовый', 'фруктовый', 'ягодный', 'эвкалиптовый', 'лавадный', 'кедровый', 'сосновый', 'боярышниковый',
-            'чертополоховый', 'одуванчиковый', 'шалфейный', 'лавандовый', 
-            'розовый', 'апельсиновый', 'гранатовый', 'миндальный', 'ванильный', 'коричный', 'башкирский', 'алтайский', 'кавказский', 'карпатский', 'сибирский',
-            'дальневосточный', 'крымский', 'кубанский', 'донской', 'волжский', 'тёмный', 'светлый', 'янтарный', 'прозрачный', 'кристаллизованный',
-            'жидкий', 'густой', 'ароматный']
+        group_types = [
+            'цветочный','падевый','смешанный','монофлорный','полифлорный','лесной','луговой','горный','степной','таёжный',
+        ]
+        
+        honey_types = [
+            'липовый', 'гречишный','акациевый','донниковый','каштановый','клеверный','подсолнечниковый',
+            'мятный','эвкалиптовый','рапсовый','майский','июньский','августовский','весенний','осенний',
+            'фруктовый','ягодный','кедровый','сосновый','боярышниковый','одуванчиковый','шалфейный',
+            'лавандовый','розовый','апельсиновый','гранатовый','миндальный','ванильный','коричный',
+            'алтайский','башкирский','кавказский','сибирский','крымский','кубанский','донской','янтарный','ароматный',
+        ]
         
         groups = []
-        for _ in range(30):
-            group = Group.objects.create(name=random.choice(types) + ' мёд')
+        for group_type in group_types:
+            group = Group.objects.create(name=group_type + ' мёд')
             groups.append(group)
+        self.stdout.write(f'Создано групп: {len(groups)}')
         
         for _ in range(200):
             Honey.objects.create(
-                name=random.choice(types) + ' мёд',
+                name=random.choice(honey_types) + ' мёд',
                 group=random.choice(groups)
             )
+        self.stdout.write('Создано товаров: 200')
         
         for _ in range(200):
             Stock.objects.create(
-                name=random.choice(types) + ' мёд',
+                name=random.choice(honey_types) + ' мёд',
                 group=random.choice(groups),
                 count=random.randint(0, 500)
             )
+        self.stdout.write('Создано остатков: 200')
         
         for _ in range(300):
             Order.objects.create(
-                name='Заказ ' + fake.word(),
+                name='Заказ ' + random.choice(honey_types) + ' мёда',
                 group=random.choice(groups),
                 count=random.randint(1, 100)
             )
+        self.stdout.write('Создано заказов: 300')
         
         for _ in range(250):
             Feedback.objects.create(
                 name=fake.first_name(),
                 group=random.choice(groups),
-                comment=fake.sentence(nb_words=5)
+                comment='Очень вкусный ' + random.choice(honey_types) + ' мёд!'
             )
+        self.stdout.write('Создано отзывов: 250')
+        
+        self.stdout.write(self.style.SUCCESS('Генерация завершена!'))

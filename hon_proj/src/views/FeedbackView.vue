@@ -60,7 +60,13 @@ async function fetchFeedbacks() {
 async function fetchStats() {
   const res = await axios.get('/api/feedback/stats/')
   stats.value = res.data
-  showStats.value = true
+}
+
+function toggleStats() {
+  if (!showStats.value) {
+    fetchStats()
+  }
+  showStats.value = !showStats.value
 }
 
 async function createFeedback() {
@@ -157,7 +163,9 @@ onBeforeMount(async () => {
   <div>
     <h2>Отзывы о мёде</h2>
     
-    <button class="btn btn-info mb-3" @click="fetchStats">📊 Показать статистику</button>
+    <button class="btn btn-info mb-3" @click="toggleStats">
+      {{ showStats ? '📊 Скрыть статистику' : '📊 Показать статистику'}}
+    </button>
     
     <div v-if="showStats" class="alert alert-info mb-3">
       <h5>Статистика по отзывам:</h5>

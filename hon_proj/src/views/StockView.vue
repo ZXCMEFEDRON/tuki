@@ -65,7 +65,13 @@ async function fetchStocks() {
 async function fetchStats() {
   const res = await axios.get('/api/stock/stats/')
   stats.value = res.data
-  showStats.value = true
+}
+
+function toggleStats() {
+  if (!showStats.value) {
+    fetchStats()
+  }
+  showStats.value = !showStats.value
 }
 
 async function createStock() {
@@ -166,7 +172,9 @@ onBeforeMount(async () => {
   <div>
     <h2>Остатки мёда</h2>
     
-    <button class="btn btn-info mb-3" @click="fetchStats">📊 Показать статистику</button>
+    <button class="btn btn-info mb-3" @click="toggleStats">
+      {{ showStats ? '📊 Скрыть статистику' : '📊 Показать статистику' }}
+    </button>
     
     <div v-if="showStats" class="alert alert-info mb-3">
       <h5>Статистика по остаткам:</h5>

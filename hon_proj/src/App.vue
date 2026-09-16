@@ -17,6 +17,10 @@ function logout() {
   userStore.logout()
   router.push('/login')
 }
+
+function goToLogin() {
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -25,13 +29,21 @@ function logout() {
       <div class="container">
         <span class="navbar-brand">Магазин мёда</span>
         <div class="d-flex gap-3 align-items-center">
+          
           <span v-if="userStore.isAuthenticated" class="text-white">
             👤 {{ userStore.user?.username }}
           </span>
+          
+          <button v-if="!userStore.isAuthenticated" @click="goToLogin" class="btn btn-success btn-sm">
+            🔐 Войти
+          </button>
+          
           <a href="/admin" class="btn btn-warning btn-sm">Админка</a>
+          
           <button v-if="userStore.isAuthenticated" @click="logout" class="btn btn-danger btn-sm">
             Выйти
           </button>
+          
         </div>
       </div>
     </nav>

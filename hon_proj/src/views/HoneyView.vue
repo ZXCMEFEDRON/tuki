@@ -55,7 +55,13 @@ async function fetchHoneys() {
 async function fetchStats() {
   const res = await axios.get('/api/honey/stats/')
   stats.value = res.data
-  showStats.value = true
+}
+
+function toggleStats() {
+  if (!showStats.value) {
+    fetchStats()
+  }
+  showStats.value = !showStats.value
 }
 
 async function exportToExcel() {
@@ -174,7 +180,9 @@ onBeforeMount(async () => {
     <h2>Товары</h2>
     
     <div class="mb-3">
-      <button class="btn btn-info" @click="fetchStats">📊 Показать статистику</button>
+      <button class="btn btn-info" @click="toggleStats">
+          {{ showStats ? '📊 Скрыть статистику' : '📊 Показать статистику' }}
+        </button>
       <button class="btn btn-success ms-2" @click="exportToExcel">📎 Экспорт в Excel</button>
     </div>
     
